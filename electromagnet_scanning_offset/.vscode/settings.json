@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/gabrielrobinson-leith/.platformio/penv/bin:/Users/gabrielrobinson-leith/.platformio/penv:/Users/gabrielrobinson-leith/anaconda3/bin:/Users/gabrielrobinson-leith/.sdkman/candidates/gradle/current/bin:/Library/Frameworks/Python.framework/Versions/3.5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
