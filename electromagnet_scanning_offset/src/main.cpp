@@ -177,7 +177,7 @@ void loop() {
    
     Serial.println("done scan");
 
-  
+    //magenta is not real
   //  sending dc analog offset to magnets
     analogWrite(x_pin, x_offset);
     analogWrite(y_pin, y_offset); 
