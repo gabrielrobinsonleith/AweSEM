@@ -37,7 +37,7 @@ int y_offset = 0;
 //I belive the logic is correct just do not know the syntax
 void getMax(){
 int l = (sizeof(voltage)/sizeof(voltage[0]));
-
+//balls
 int max_val = 0;
 int max_val_index = 0;
 
