@@ -15,7 +15,7 @@ const int led_pin = 2;
 const int switch_pin = 3;
 const int x_pin = A21;
 const int y_pin = A22;
-const int photodiode = 6;
+const int photodiode = A9;
 
 //max and min analog values to be sent to electromagnets
 int max_v = 40;
@@ -82,7 +82,7 @@ void scan_magnets(){
 //       voltage[y*max_v+x] = analogRead(photodiode);
 
 //      records random value for testing purposes
-       voltage[y*max_v+x] = random(0,1000);
+       voltage[y*max_v+x] = analogRead(photodiode);
        Serial.print(voltage[y*max_v+x]);
        Serial.print("<-voltage mod_index->");
        Serial.println(y*max_v+x);
@@ -118,33 +118,47 @@ void setup() {
   digitalWrite(led_pin, 0);
   pinMode(switch_pin,INPUT_PULLDOWN);
   pinMode(led_pin,OUTPUT);
-  Serial.begin(9600);
-//  will only begin when switch is turned on
-while(digitalRead(switch_pin) == 0){
-  Serial.println("Waiting");
-  delay(300);
-}
+  pinMode(photodiode,INPUT);
+  Serial.begin(115200);
 
-  scan_magnets();
 
-  getMax();
+
+// //  will only begin when switch is turned on
+// while(digitalRead(switch_pin) == 0){
+//   Serial.println("Waiting");
+//   delay(300);
+// }
+
+//   scan_magnets();
+
+//   getMax();
    
-  Serial.println("done scan");
+//   Serial.println("done scan");
 
   
-//  sending dc analog offset to magnets
-  analogWrite(x_pin, x_offset);
-  analogWrite(y_pin, y_offset); 
+// //  sending dc analog offset to magnets
+//   analogWrite(x_pin, x_offset);
+//   analogWrite(y_pin, y_offset); 
   
-  Serial.println("constant dc output set: ");
-  Serial.print("x offset: ");
-  Serial.println(x_offset);
-  Serial.print("y offset: ");
-  Serial.println(y_offset);
+//   Serial.println("constant dc output set: ");
+//   Serial.print("x offset: ");
+//   Serial.println(x_offset);
+//   Serial.print("y offset: ");
+//   Serial.println(y_offset);
   
 }
 
 void loop() {
+
+int sum = 0;
+  for(int i = 0; i < 10; i++){
+    sum = sum + analogRead(photodiode);
+    delay(100);
+  }
+
+  Serial.println(sum / 10.0);
+  
+
 
 
 }
