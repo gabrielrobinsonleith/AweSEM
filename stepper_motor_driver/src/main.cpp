@@ -1,11 +1,11 @@
-/*
-//  Rhis is a test sketch for the Adafruit assembled Motor Shield for Arduino v2
-//   It won't work with v1.x motor shields! Only for the v2's with built in PWM
-//   control
 
-//   For use with the Adafruit Motor Shield v2
-//   ---->	http://www.adafruit.com/products/1438
-*/
+// control the AweSEM prototypev2 motors
+
+// use m and s to type commands into Serial
+
+// EX: to move it by 30 units up type m30 (m-30 for downwards)
+// speed is default 10rpm, to change type s30 to set speed to 30rpm
+
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -72,10 +72,20 @@ void showNewData() {
    if (receivedChars[0] == 's'){
     Serial.println("Speed: ");
     Serial.println(val);
-   }
+    myMotor->setSpeed(val);
+
+   }  
    else if (receivedChars[0] == 'm'){ 
      Serial.println("Move: ");
      Serial.println(val);
+    
+    if(val>0){
+      myMotor->step(val,FORWARD,DOUBLE);
+    }
+    else{
+      myMotor->step(abs(val),BACKWARD,DOUBLE);
+    }
+
    }
    else{
      Serial.println("Error");
@@ -92,7 +102,7 @@ void setup() {
   AFMS.begin();  // create with the default frequency 1.6KHz
   //AFMS.begin(1000);  // OR with a different frequency, say 1KHz
 
-  myMotor->setSpeed(0);  // 10 rpm
+  myMotor->setSpeed(10);  // 10 rpm
 
    Serial.println("<Arduino is ready>");
 }
