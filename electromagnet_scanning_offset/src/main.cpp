@@ -46,14 +46,17 @@ for(int i = 0; i < l; i++){
   max_val = voltage[i];
   max_val_index = i;
 } 
+
+}
+
   Serial.print("maximum value: ");
   Serial.println(max_val);
   Serial.print("maximum value index: ");
   Serial.println(max_val_index);
   Serial.println();
-}
-x_offset = (max_val_index % max_v);
-y_offset = (((max_val_index)-(max_val_index % max_v))/max_v);
+
+  x_offset = (max_val_index % max_v);
+  y_offset = (((max_val_index)-(max_val_index % max_v))/max_v);
 
 //  Serial.print("x offset: ");
 //  Serial.println(x_offset);
@@ -64,20 +67,25 @@ y_offset = (((max_val_index)-(max_val_index % max_v))/max_v);
 //this function scans the magnets in a ~raster pattern and records
 //photodiode voltages
 void scan_magnets(){
-  Serial.println("scanning");
+
+  // Serial.println("scanning");
 //  starting in the top left corner for scanning
   analogWrite(x_pin, min_v);
   analogWrite(y_pin, min_v);
-
+  delay(100);
 //  iterates through full scan a set number of times
 //the value for samples is set in the constants way above
   for(int iteration = 0; iteration < samples; iteration++){
 //    iteratates through y values
   for(int y = 0; y < max_v; y++){
+
 //    iterates thorugh x values
+
+    delay(15);
+    analogWrite(y_pin,map(min_v+y,0,max_v,0,255));
     for(int x = 0; x < max_v; x++){
 
-//      records photodiode valuesv
+//      records photodiode values
 
 
 // //the following code is to test out the code, uncomment to ensure max is reached manually
@@ -100,7 +108,10 @@ void scan_magnets(){
       //  }
 
       //  else{
+        analogWrite(x_pin, map(min_v+x,0,max_v,0,255));
        voltage[y*max_v+x] = analogRead(photodiode);
+       
+          delay(15);
       //  }
 
 
@@ -111,84 +122,98 @@ void scan_magnets(){
 
 
 //      increments x scan position
-     analogWrite(x_pin, min_v+x);
+     
+    //  Serial.println(map(min_v+x,0,max_v,0,255));
+    //  Serial.println(min_v+x);
      delay(10);
     }
 //      increments y scan position
-    analogWrite(y_pin,min_v+y);
+
+    
    }
   }
 //calls get max functino
  
 
 //turns on led when everything is done
-  digitalWrite(led_pin, 1);
+
 }
 
 void setup() {
-  digitalWrite(led_pin, 0);
+  // digitalWrite(led_pin, 1);
   pinMode(switch_pin,INPUT_PULLDOWN);
-  pinMode(led_pin,OUTPUT);
+  // pinMode(led_pin,OUTPUT);
   pinMode(photodiode,INPUT);
   Serial.begin(115200);
 
 
 
-//  will only begin when switch is turned on
-while(digitalRead(switch_pin) == 0){
-  Serial.println("Waiting");
-  delay(300);
-}
+// //  will only begin when switch is turned on
+// while(digitalRead(switch_pin) == 0){
+//   Serial.println("Waiting");
+//   delay(300);
+// }
 
-  scan_magnets();
+//   delay(25);
+//   scan_magnets();
 
-  getMax();
-   
-  Serial.println("done scan");
+//   getMax();
+  
+//   Serial.println("done scan");
 
   
-//  sending dc analog offset to magnets
-  analogWrite(x_pin, x_offset);
-  analogWrite(y_pin, y_offset); 
+// //  sending dc analog offset to magnets
+
+//   analogWrite(x_pin, map(y_offset,0,max_v,0,255));
+//   analogWrite(y_pin, map(x_offset,0,max_v,0,255)); 
   
-  Serial.println("constant dc output set: ");
-  Serial.print("x offset: ");
-  Serial.println(x_offset);
-  Serial.print("y offset: ");
-  Serial.println(y_offset);
+//   Serial.println("constant dc output set: ");
+//   Serial.print("x offset: ");
+//   Serial.println(x_offset);
+//   Serial.print("y offset: ");
+//   Serial.println(y_offset);
   
 }
 
 void loop() {
+analogWrite(x_pin,map(40,0,max_v,0,255));
+analogWrite(y_pin,map(40,0,max_v,0,255));
+delay(100);
+Serial.println("ioeuhrf");
 
 
-  //  will reset to scanning mode when switch is turned off
-  if (digitalRead(switch_pin) == 0) {
 
-    //    waiting for switch to turn back on
-    digitalWrite(led_pin, 0);
-    while (digitalRead(switch_pin) == 0) {
-      Serial.print("Waiting");
-      delay(100);
-    }
-    scan_magnets();
 
-    getMax();
+  // //  will reset to scanning mode when switch is turned off
+  // if (digitalRead(switch_pin) == 0) {
+
+  //   //    waiting for switch to turn back on
+  //   digitalWrite(led_pin, 0);
+  //   while (digitalRead(switch_pin) == 0) {
+  //     Serial.print("Waiting");
+  //     delay(100);
+  //   }
+  //   scan_magnets();
+
+  //   getMax();
    
-    Serial.println("done scan");
-
-    //magenta is not real
-  //  sending dc analog offset to magnets
-    analogWrite(x_pin, x_offset);
-    analogWrite(y_pin, y_offset); 
-    
-    Serial.println("constant dc output set: ");
-    Serial.print("x offset: ");
-    Serial.println(x_offset);
-    Serial.print("y offset: ");
-    Serial.println(y_offset);
+  //   Serial.println("done scan");
   
-  }
+  //   //magenta is not real
+  // //  sending dc analog offset to magnets
+  //   // pinMode(photodiode,OUTPUT);
+  //   // analogWrite(photodiode,0);
+  //   analogWrite(x_pin, x_offset);
+  //   analogWrite(y_pin, y_offset); 
+    
+  //   Serial.println("constant dc output set: ");
+  //   Serial.print("x offset: ");
+  //   Serial.println(x_offset);
+  //   Serial.print("y offset: ");
+  //   Serial.println(y_offset);
+  
+  // }
+  // delay(20);
 
 
 }
