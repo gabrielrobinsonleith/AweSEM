@@ -49,11 +49,11 @@ for(int i = 0; i < l; i++){
 
 }
 
-  Serial.print("maximum value: ");
-  Serial.println(max_val);
-  Serial.print("maximum value index: ");
-  Serial.println(max_val_index);
-  Serial.println();
+  // Serial.print("maximum value: ");
+  // Serial.println(max_val);
+  // Serial.print("maximum value index: ");
+  // Serial.println(max_val_index);
+  // Serial.println();
 
   x_offset = (max_val_index % max_v);
   y_offset = (((max_val_index)-(max_val_index % max_v))/max_v);
@@ -81,7 +81,7 @@ void scan_magnets(){
 
 //    iterates thorugh x values
 
-    delay(15);
+    // delay(15);
     analogWrite(y_pin,map(min_v+y,0,max_v,0,255));
     for(int x = 0; x < max_v; x++){
 
@@ -111,13 +111,17 @@ void scan_magnets(){
         analogWrite(x_pin, map(min_v+x,0,max_v,0,255));
        voltage[y*max_v+x] = analogRead(photodiode);
        
-          delay(15);
+          delay(25);
       //  }
 
 
-       Serial.print(voltage[y*max_v+x]);
-       Serial.print("<-voltage mod_index->");
-       Serial.println(y*max_v+x);
+      //  Serial.print(voltage[y*max_v+x]);
+      Serial.print(x);
+      Serial.print(",");
+      Serial.print(y);
+       Serial.print(",");
+      //  Serial.print("<-voltage mod_index->");
+       Serial.println(voltage[y*max_v+x]);
        
 
 
@@ -125,7 +129,7 @@ void scan_magnets(){
      
     //  Serial.println(map(min_v+x,0,max_v,0,255));
     //  Serial.println(min_v+x);
-     delay(10);
+    //  delay(10);
     }
 //      increments y scan position
 
@@ -148,47 +152,56 @@ void setup() {
 
 
 
-// //  will only begin when switch is turned on
+//  will only begin when switch is turned on
 // while(digitalRead(switch_pin) == 0){
 //   Serial.println("Waiting");
 //   delay(300);
 // }
 
-//   delay(25);
-//   scan_magnets();
+  delay(25);
+  scan_magnets();
 
-//   getMax();
+  getMax();
   
-//   Serial.println("done scan");
+  // Serial.println("done scan");
 
   
-// //  sending dc analog offset to magnets
+//  sending dc analog offset to magnets
 
-//   analogWrite(x_pin, map(y_offset,0,max_v,0,255));
-//   analogWrite(y_pin, map(x_offset,0,max_v,0,255)); 
+  analogWrite(x_pin, map(x_offset,0,max_v,0,255));
+  analogWrite(y_pin, map(y_offset,0,max_v,0,255)); 
+
+
+
+  // This is for the processing code
+  Serial.print(255);
+  Serial.print(",");
+  Serial.print(x_offset);
+  Serial.print(",");
+  Serial.println(y_offset);
   
-//   Serial.println("constant dc output set: ");
-//   Serial.print("x offset: ");
-//   Serial.println(x_offset);
-//   Serial.print("y offset: ");
-//   Serial.println(y_offset);
+  // Serial.println("constant dc output set: ");
+  // Serial.print("x offset: ");
+  // Serial.println(x_offset);
+  // Serial.print("y offset: ");
+  // Serial.println(y_offset);
   
 }
 
 void loop() {
-analogWrite(x_pin,map(40,0,max_v,0,255));
-analogWrite(y_pin,map(40,0,max_v,0,255));
+// analogWrite(x_pin,map(40,0,max_v,0,255));
+// analogWrite(y_pin,map(40,0,max_v,0,255));
 delay(100);
-Serial.println("ioeuhrf");
 
 
 
 
-  // //  will reset to scanning mode when switch is turned off
+
+  //  will reset to scanning mode when switch is turned off
   // if (digitalRead(switch_pin) == 0) {
 
-  //   //    waiting for switch to turn back on
-  //   digitalWrite(led_pin, 0);
+    //    waiting for switch to turn back on
+    // digitalWrite(led_pin, 0);
   //   while (digitalRead(switch_pin) == 0) {
   //     Serial.print("Waiting");
   //     delay(100);
@@ -213,7 +226,7 @@ Serial.println("ioeuhrf");
   //   Serial.println(y_offset);
   
   // }
-  // delay(20);
+  delay(20);
 
 
 }
