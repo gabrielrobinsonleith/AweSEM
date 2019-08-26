@@ -15,7 +15,7 @@ const int led_pin = 2;
 const int switch_pin = 3;
 const int x_pin = A21;
 const int y_pin = A22;
-const int photodiode = A9;
+const int photodiode = A8;
 
 //max and min analog values to be sent to electromagnets
 int max_v = 40;
