@@ -44,7 +44,7 @@ void draw()
       newRow.setFloat("x", sensorVal[0]);//record a unique identifier (the row’s index)
       newRow.setFloat("y", sensorVal[1]);
       newRow.setFloat("intensity",sensorVal[2]);
-      
+//whatever
         int inByte = int(sensorVal[2]); 
         
          
