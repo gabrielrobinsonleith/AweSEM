@@ -111,7 +111,7 @@ void scan_magnets(){
         analogWrite(x_pin, map(min_v+x,0,max_v,0,255));
        voltage[y*max_v+x] = analogRead(photodiode);
        
-          delay(25);
+          delay(2);
       //  }
 
 
@@ -226,7 +226,28 @@ delay(100);
   //   Serial.println(y_offset);
   
   // }
-  delay(20);
+  
+  delay(25);
+  scan_magnets();
+
+  getMax();
+  
+  // Serial.println("done scan");
+
+  
+//  sending dc analog offset to magnets
+
+  analogWrite(x_pin, map(x_offset,0,max_v,0,255));
+  analogWrite(y_pin, map(y_offset,0,max_v,0,255)); 
+
+
+
+  // This is for the processing code
+  Serial.print(255);
+  Serial.print(",");
+  Serial.print(x_offset);
+  Serial.print(",");
+  Serial.println(y_offset);
 
 
 }
